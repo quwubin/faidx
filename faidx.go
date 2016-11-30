@@ -67,7 +67,12 @@ func position(r fai.Record, p int) int64 {
 func (f *Faidx) Get(chrom string, start int, end int) (string, error) {
 	idx, ok := f.Index[chrom]
 	if !ok {
-		return "", fmt.Errorf("unknown sequence %s", chrom)
+		return "", nil
+		// return "", fmt.Errorf("unknown sequence %s", chrom)
+	}
+
+	if end == -1 {
+		end = idx.Length
 	}
 
 	pstart := position(idx, start)
